@@ -26,6 +26,17 @@ public class AppTest {
         assertThat(out).contains("명령) ");
         assertThat(out).contains("명언 : ");
         assertThat(out).contains("작가 : ");
+    }
 
+    @Test
+    @DisplayName("'등록")
+    void t3() throws Exception {
+        String out = AppTestRunner.run("""
+                        등록
+                        현재를 사랑하라.
+                        작자미상
+                        """);
+
+        assertThat(out).contains("1번 명언이 등록되었습니다.");
     }
 }
