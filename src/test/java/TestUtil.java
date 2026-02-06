@@ -25,6 +25,6 @@ public class TestUtil {
 
         System.setOut(printStream);
 
-        return  byteArrayOutputStream;
+        return byteArrayOutputStream;
     }
 }
