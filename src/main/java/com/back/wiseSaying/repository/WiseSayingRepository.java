@@ -11,7 +11,7 @@ public class WiseSayingRepository {
     private int lastId = 0;
 
     public WiseSaying save(WiseSaying wiseSaying) {
-        if(isNew(wiseSaying)) {
+        if (isNew(wiseSaying)) {
             wiseSaying.setId(++lastId);
             wiseSayings.add(wiseSaying);
         }
@@ -23,7 +23,19 @@ public class WiseSayingRepository {
         return wiseSayings.reversed();
     }
 
-    public boolean isNew(WiseSaying wiseSaying){
+    public boolean delete(int id) {
+        return wiseSayings.removeIf(wiseSaying -> wiseSaying.getId() == id);
+    }
+
+    public WiseSaying findByIdOrNull(int id) {
+
+        return wiseSayings.stream()
+                .filter(wiseSaying -> wiseSaying.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean isNew(WiseSaying wiseSaying) {
         return wiseSaying.getId() == 0;
     }
 }

@@ -1,6 +1,7 @@
 package com.back.wiseSaying.controller;
 
 import com.back.global.AppContext;
+import com.back.global.Rq;
 import com.back.wiseSaying.entity.WiseSaying;
 import com.back.wiseSaying.service.WiseSayingService;
 
@@ -15,7 +16,7 @@ public class WiseSayingController {
     private int lastId = 0;
     private WiseSayingService wiseSayingService;
 
-    public WiseSayingController() {
+    public WiseSayingController(Scanner sc) {
         this.sc = AppContext.sc;
         this.wiseSayingService = AppContext.wiseSayingService;
     }
@@ -42,6 +43,36 @@ public class WiseSayingController {
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
+
+    }
+
+    public void actionDelete(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+        boolean deleted = wiseSayingService.delete(id);
+
+        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
+
+        if (!deleted) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
+
+
+    }
+
+    public void actionModify(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+
+        WiseSaying wiseSaying = wiseSayingService.findByIdOrNull(id);
+
+        if (wiseSaying == null) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
 
     }
 }
