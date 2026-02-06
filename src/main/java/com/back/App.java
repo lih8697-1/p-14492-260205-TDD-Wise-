@@ -1,3 +1,8 @@
+package com.back;
+
+import com.back.system.controller.SystemController;
+import com.back.wiseSaying.controller.WiseSayingController;
+
 import java.util.Scanner;
 
 public class App {
