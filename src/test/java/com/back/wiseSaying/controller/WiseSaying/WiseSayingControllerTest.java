@@ -10,7 +10,7 @@ public class WiseSayingControllerTest {
 
     @Test
     @DisplayName("'== 명언 앱 ==' 출력")
-    void t1() throws Exception {
+    void t1() {
         String out = AppTestRunner.run("");
 
         assertThat(out).contains("== 명언 앱 ==");
@@ -18,8 +18,8 @@ public class WiseSayingControllerTest {
     }
 
     @Test
-    @DisplayName("'등록")
-    void t2() throws Exception {
+    @DisplayName("등록")
+    void t2() {
         String out = AppTestRunner.run("""
                 등록
                 현재를 사랑하라.
@@ -32,8 +32,8 @@ public class WiseSayingControllerTest {
     }
 
     @Test
-    @DisplayName("'등록")
-    void t3() throws Exception {
+    @DisplayName("등록 시 명언 번호 노출")
+    void t3() {
         String out = AppTestRunner.run("""
                 등록
                 현재를 사랑하라.
@@ -44,7 +44,7 @@ public class WiseSayingControllerTest {
     }
 
     @Test
-    @DisplayName("등록할 때마다 생성되는 명언 번호가 증가")
+    @DisplayName("등록할때 마다 생성되는 명언번호가 증가")
     void t4() {
         String out = AppTestRunner.run("""
                 등록
@@ -74,8 +74,9 @@ public class WiseSayingControllerTest {
         assertThat(out)
                 .contains("번호 / 작가 / 명언")
                 .contains("----------------------")
-                .containsSubsequence("2 / 작자미상 / 과거에 집착하지 마라.",
-                        "1 / 작자미상 / 현재를 사랑하라.");
+                .containsSubsequence("2 / 작자미상 / 과거에 집착하지 마라."
+                        , "1 / 작자미상 / 현재를 사랑하라.");
+
     }
 
     @Test
@@ -91,7 +92,6 @@ public class WiseSayingControllerTest {
                 삭제?id=1
                 목록
                 """);
-
 
         assertThat(out)
                 .contains("1번 명언이 삭제되었습니다.")
@@ -132,6 +132,25 @@ public class WiseSayingControllerTest {
 
         assertThat(out)
                 .contains("3번 명언은 존재하지 않습니다.");
+
+    }
+
+    @Test
+    @DisplayName("수정id=1")
+    void t9() {
+        String out = AppTestRunner.run("""
+                등록
+                현재를 사랑하라.
+                작자미상
+                수정?id=1
+                너 자신을 알라
+                소크라테스
+                목록
+                """);
+
+        assertThat(out)
+                .doesNotContain("1 / 작자미상 / 현재를 사랑하라.")
+                .contains("1 / 소크라테스 / 너 자신을 알라");
 
     }
 }
