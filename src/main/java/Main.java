@@ -28,7 +28,7 @@ public class Main {
     public static void lab1() {
         Scanner scan = new Scanner("""
                 등록
-                과거에 집착하지 마라.
+                과거에 집착하지 마라
                 이인희
                 """);
 
