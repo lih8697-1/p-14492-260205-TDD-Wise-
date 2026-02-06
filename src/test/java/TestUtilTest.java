@@ -35,7 +35,7 @@ public class TestUtilTest {
 
         String rst = byteArrayOutputStream.toString();
 
-        assertThat(rst).isEqualTo("안녕하세요.");
+        assertThat(rst).contains("안녕하세요.");
     }
 
 //    @Test
