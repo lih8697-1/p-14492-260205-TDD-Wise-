@@ -39,7 +39,6 @@ public class WiseSayingController {
         List<WiseSaying> wiseSayings = wiseSayingService.findListDesc();
 
         wiseSayings
-                .reversed()
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
