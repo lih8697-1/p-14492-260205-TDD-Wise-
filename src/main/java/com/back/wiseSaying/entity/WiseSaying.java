@@ -5,8 +5,7 @@ public class WiseSaying {
     private String saying;
     private String author;
 
-    public WiseSaying(int id, String saying, String author) {
-        this.id = id;
+    public WiseSaying(String saying, String author) {
         this.saying = saying;
         this.author = author;
     }
