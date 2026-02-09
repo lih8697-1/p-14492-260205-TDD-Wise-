@@ -226,6 +226,8 @@ public class WiseSayingControllerTest {
 
         String out = AppTestRunner.run(input);
 
+        System.out.println(out);
+
         assertThat(out)
                 .contains("10 / 작가 10 / 명언 10")
                 .contains("9 / 작가 9 / 명언 9")

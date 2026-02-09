@@ -15,6 +15,12 @@ public class AppTestRunner {
         AppContext.init(sc);
         new App().run();
 
+        try {
+            TestUtil.clearSetOutToByteArray(outputStream);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         return outputStream.toString();
     }
 }
