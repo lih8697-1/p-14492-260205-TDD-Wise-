@@ -1,22 +1,17 @@
 package com.back.wiseSaying.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Setter
 @Getter
-@ToString
-
+@Setter
+@AllArgsConstructor
 public class WiseSaying {
+
     private int id;
     private String saying;
     private String author;
-
-    public WiseSaying(int id, String saying, String author) {
-        this.saying = saying;
-        this.author = author;
-    }
 
     public boolean isNew() {
         return id == 0;
