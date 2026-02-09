@@ -1,5 +1,6 @@
 package com.back.wiseSaying.repository;
 
+
 import com.back.wiseSaying.entity.WiseSaying;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class WiseSayingRepository {
     private int lastId = 0;
 
     public WiseSaying save(WiseSaying wiseSaying) {
-        if (isNew(wiseSaying)) {
+        if(wiseSaying.isNew()) {
             wiseSaying.setId(++lastId);
             wiseSayings.add(wiseSaying);
         }
@@ -19,12 +20,12 @@ public class WiseSayingRepository {
         return wiseSaying;
     }
 
-    public List<WiseSaying> findListDesc() {
-        return wiseSayings.reversed();
-    }
-
     public boolean delete(int id) {
         return wiseSayings.removeIf(wiseSaying -> wiseSaying.getId() == id);
+    }
+
+    public List<WiseSaying> findListDesc() {
+        return wiseSayings.reversed();
     }
 
     public WiseSaying findByIdOrNull(int id) {
@@ -35,7 +36,10 @@ public class WiseSayingRepository {
                 .orElse(null);
     }
 
-    public boolean isNew(WiseSaying wiseSaying) {
-        return wiseSaying.getId() == 0;
+    public List<WiseSaying> findByKeywordOrderByDesc(String kw) {
+        return wiseSayings.stream()
+                .filter(w -> w.getSaying().contains(kw))
+                .toList()
+                .reversed();
     }
 }

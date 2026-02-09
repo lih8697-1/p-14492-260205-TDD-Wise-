@@ -1,6 +1,5 @@
 package com.back.global;
 
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +22,11 @@ public class Rq {
         Map<String, String> paramMap = new HashMap<>();
 
         String[] cmdBits = cmd.split("\\?");
+
+        if(cmdBits.length < 2) {
+            return defaultValue;
+        }
+
         String queryString = cmdBits[1];
         String[] queryBits = queryString.split("&");
 
