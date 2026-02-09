@@ -23,6 +23,8 @@ public class UtilJsonTest {
         // when
         String jsonStr = Util.json.toString(map);
 
+        System.out.println(jsonStr);
+
         // then
         assertThat(jsonStr).isEqualTo(
                 """
@@ -32,6 +34,29 @@ public class UtilJsonTest {
                     "age": 20
                 }"""
         );
+    }
+
+    @Test
+    @DisplayName("Json을 map으로 바꿀 수 있다.")
+    void t2() {
+        // given
+        String jsonStr = """
+                {
+                    "id": 1,
+                    "name": "홍길동",
+                    "age": 20
+                }""";
+
+        // when
+        Map<String, Object> map = Util.json.toMap(jsonStr);
+
+        System.out.println(map);
+
+        // then
+        assertThat(map)
+                .containsEntry("id", 1)
+                .containsEntry("name", "홍길동")
+                .containsEntry("age", 20);
 
     }
 
