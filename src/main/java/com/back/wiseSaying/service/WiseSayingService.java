@@ -32,8 +32,12 @@ public class WiseSayingService {
         wiseSayingRepository.save(wiseSaying);
     }
 
-    public List<WiseSaying> findListDesc(String kw) {
-        return wiseSayingRepository.findByKeywordOrderByDesc(kw);
+    public List<WiseSaying> findListDesc(String kw, String kwt) {
+        return switch (kwt) {
+            case "content" -> wiseSayingRepository.findByContentKeywordOrderByDesc(kw);
+            case "author" -> wiseSayingRepository.findByAuthorKeywordOrderByDesc(kw);
+            default -> wiseSayingRepository.findListDesc();
+        };
     }
 
     public WiseSaying findByIdOrNull(int id) {
