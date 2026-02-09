@@ -7,6 +7,8 @@ import com.back.wiseSaying.entity.WiseSaying;
 import com.back.wiseSaying.service.WiseSayingService;
 
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class WiseSayingController {
 
@@ -34,7 +36,7 @@ public class WiseSayingController {
         int id = rq.getParamAsInt("id", -1);
         boolean deleted = wiseSayingService.delete(id);
 
-        if(!deleted) {
+        if (!deleted) {
             System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
             return;
         }
@@ -49,7 +51,7 @@ public class WiseSayingController {
 
         WiseSaying wiseSaying = wiseSayingService.findByIdOrNull(id);
 
-        if(wiseSaying == null) {
+        if (wiseSaying == null) {
             System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
             return;
         }
@@ -70,7 +72,7 @@ public class WiseSayingController {
         int page = rq.getParamAsInt("page", 1);
         int pageSize = rq.getParamAsInt("pageSize", 5);
 
-        if(kw.isBlank()) {
+        if (kw.isBlank()) {
             System.out.println("----------------------");
             System.out.println("검색타입 : %s".formatted(kwt));
             System.out.println("검색어 : %s".formatted(kw));
@@ -87,5 +89,12 @@ public class WiseSayingController {
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
 
+        System.out.print("페이지 : ");
+        String pageMenuStr = IntStream
+                .rangeClosed(1, pageDto.getPageCount())
+                .mapToObj((num) -> num == page ? "[" + num +"] " : String.valueOf(num))
+                .collect(Collectors.joining(" / "));
+
+        System.out.println(pageMenuStr);
     }
 }
