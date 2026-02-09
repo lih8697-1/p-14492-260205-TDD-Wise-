@@ -67,6 +67,8 @@ public class WiseSayingController {
 
         String kwt = rq.getParam("keywordType", "");
         String kw = rq.getParam("keyword", "");
+        int page = rq.getParamAsInt("page", 1);
+        int pageSize = rq.getParamAsInt("pageSize", 5);;
 
         System.out.println("----------------------");
         System.out.println("검색타입 : %s".formatted(kwt));
@@ -76,8 +78,7 @@ public class WiseSayingController {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        int page = 1;
-        int pageSize = 5;
+
 
         List<WiseSaying> wiseSayings = wiseSayingService.findListDesc(kw, kwt, page, pageSize);
 
