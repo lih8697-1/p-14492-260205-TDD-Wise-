@@ -101,4 +101,13 @@ public class WiseSayingFileRepository {
 
         return pageOf(filteredWiseSayings, pageNo, pageSize);
     }
+
+    public PageDto findByContentContainingOrAuthorContainingDesc(String kw, int pageSize, int pageNo) {
+        List<WiseSaying> filteredWiseSayings = findAll().stream()
+                .filter(wiseSaying -> wiseSaying.getAuthor().contains(kw) || wiseSaying.getSaying().contains(kw))
+                .sorted(Comparator.comparing(WiseSaying::getId).reversed())
+                .toList();
+
+        return pageOf(filteredWiseSayings, pageNo, pageSize);
+    }
 }
