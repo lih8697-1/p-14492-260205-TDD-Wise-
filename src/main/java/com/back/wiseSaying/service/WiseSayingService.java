@@ -4,6 +4,7 @@ import com.back.global.AppContext;
 import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
 import com.back.wiseSaying.repository.WiseSayingRepository;
+
 public class WiseSayingService {
 
     private WiseSayingRepository wiseSayingRepository;
@@ -42,5 +43,4 @@ public class WiseSayingService {
     public WiseSaying findByIdOrNull(int id) {
         return wiseSayingRepository.findByIdOrNull(id);
     }
-
 }

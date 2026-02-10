@@ -42,7 +42,6 @@ public class WiseSayingController {
         }
 
         System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
-
     }
 
     public void actionModify(Rq rq) {
@@ -62,7 +61,6 @@ public class WiseSayingController {
         String newAuthor = sc.nextLine();
 
         wiseSayingService.modify(wiseSaying, newSaying, newAuthor);
-
     }
 
     public void actionList(Rq rq) {
@@ -92,7 +90,7 @@ public class WiseSayingController {
         System.out.print("페이지 : ");
         String pageMenuStr = IntStream
                 .rangeClosed(1, pageDto.getPageCount())
-                .mapToObj((num) -> num == page ? "[" + num +"] " : String.valueOf(num))
+                .mapToObj((num) -> num == page ? "[" + num + "] " : String.valueOf(num))
                 .collect(Collectors.joining(" / "));
 
         System.out.println(pageMenuStr);

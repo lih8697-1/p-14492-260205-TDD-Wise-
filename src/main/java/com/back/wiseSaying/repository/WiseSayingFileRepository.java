@@ -46,7 +46,8 @@ public class WiseSayingFileRepository {
 
     public Optional<WiseSaying> findById(int id) {
         String jsonStr = Util.file.get("%s/%d.json".formatted(getDbPath(), id), "");
-        if( jsonStr.isBlank()) {
+
+        if (jsonStr.isBlank()) {
             return Optional.empty();
         }
 
@@ -54,7 +55,6 @@ public class WiseSayingFileRepository {
         WiseSaying ws = WiseSaying.fromMap(map);
 
         return Optional.of(ws);
-
     }
 
     public void clear() {
@@ -85,7 +85,7 @@ public class WiseSayingFileRepository {
     private PageDto pageOf(List<WiseSaying> filteredContent, int pageNo, int pageSize) {
 
         List<WiseSaying> content = filteredContent.stream()
-                .skip((pageNo-1) * pageSize)
+                .skip((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .toList();
 
