@@ -1,4 +1,4 @@
-package com.back.wiseSaying.controller.WiseSaying;
+package com.back.wiseSaying.controller;
 
 import app.AppTestRunner;
 import org.junit.jupiter.api.DisplayName;
