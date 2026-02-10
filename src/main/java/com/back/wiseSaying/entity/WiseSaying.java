@@ -1,9 +1,6 @@
 package com.back.wiseSaying.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,20 +9,20 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class WiseSaying {
 
     private int id;
     private String saying;
     private String author;
 
-    public boolean isNew() {
-        return id == 0;
+    public WiseSaying(String saying, String author) {
+        this.saying = saying;
+        this.author = author;
     }
 
-    public WiseSaying(Map<String, Object> map) {
-        this.id =  (int) map.get("id");
-        this.saying = (String) map.get("saying");
-        this.author = (String) map.get("author");
+    public boolean isNew() {
+        return id == 0;
     }
 
     public Map<String, Object> toMap() {
@@ -35,5 +32,13 @@ public class WiseSaying {
         map.put("author", author);
 
         return map;
+    }
+
+    public static WiseSaying fromMap(Map<String, Object> map) {
+        int id = (int) map.get("id");
+        String saying = (String) map.get("saying");
+        String author = (String) map.get("author");
+
+        return new WiseSaying(id, saying, author);
     }
 }
