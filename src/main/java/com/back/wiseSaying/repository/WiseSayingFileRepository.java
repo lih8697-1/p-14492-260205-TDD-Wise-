@@ -4,6 +4,7 @@ import com.back.standard.util.Util;
 import com.back.wiseSaying.entity.WiseSaying;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class WiseSayingFileRepository {
 
@@ -17,7 +18,7 @@ public class WiseSayingFileRepository {
             wiseSaying.setId(lastId);
             Map<String, Object> wiseSayingMap = wiseSaying.toMap();
             String jsonStr = Util.json.toString(wiseSayingMap);
-            Util.file.set("db/wiseSaying/%d.json".formatted(wiseSaying.getId()), jsonStr);
+            Util.file.set("%s/%d.json".formatted(getDbPath(), wiseSaying.getId()), jsonStr);
 
         }
 
@@ -25,24 +26,31 @@ public class WiseSayingFileRepository {
     }
 
     private int getLastId() {
-        return Util.file.getAsInt("db/wiseSaying/lastId.txt", 0);
+        return Util.file.getAsInt("%s/lastId.txt".formatted(getDbPath()), 0);
     }
 
     private void increaseLastId() {
-        Util.file.set("db/wiseSaying/lastId.txt", String.valueOf(getLastId() + 1));
+        Util.file.set("%s/lastId.txt".formatted(getDbPath()), String.valueOf(getLastId() + 1));
     }
 
-    public WiseSaying findByIdOrNull(int id) {
-        String jsonStr = Util.file.get("db/wiseSaying/%d.json".formatted(id), "");
+    public Optional<WiseSaying> findById(int id) {
+        String jsonStr = Util.file.get("%s/%d.json".formatted(getDbPath(), id), "");
         if( jsonStr.isBlank()) {
-            return null;
+            return Optional.empty();
         }
 
         Map<String, Object> map = Util.json.toMap(jsonStr);
-        return WiseSaying.fromMap(map);
+        WiseSaying ws = WiseSaying.fromMap(map);
+
+        return Optional.of(ws);
+
     }
 
     public void clear() {
-        Util.file.delete("db/wiseSaying");
+        Util.file.delete(getDbPath());
+    }
+
+    public String getDbPath() {
+        return "db/wiseSaying";
     }
 }
