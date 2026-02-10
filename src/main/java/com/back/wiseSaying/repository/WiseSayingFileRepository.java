@@ -4,12 +4,11 @@ import com.back.standard.util.Util;
 import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class WiseSayingFileRepository {
+public class WiseSayingFileRepository implements WiseSayingRepository{
 
     public WiseSaying save(WiseSaying wiseSaying) {
 
@@ -32,8 +31,8 @@ public class WiseSayingFileRepository {
         return wiseSaying;
     }
 
-    public void delete(WiseSaying wiseSaying1) {
-        Util.file.delete("%s/%d.json".formatted(getDbPath(), wiseSaying1.getId()));
+    public boolean delete(WiseSaying wiseSaying1) {
+        return Util.file.delete("%s/%d.json".formatted(getDbPath(), wiseSaying1.getId()));
     }
 
     private int getLastId() {
@@ -46,8 +45,7 @@ public class WiseSayingFileRepository {
 
     public Optional<WiseSaying> findById(int id) {
         String jsonStr = Util.file.get("%s/%d.json".formatted(getDbPath(), id), "");
-
-        if (jsonStr.isBlank()) {
+        if( jsonStr.isBlank()) {
             return Optional.empty();
         }
 
@@ -55,14 +53,24 @@ public class WiseSayingFileRepository {
         WiseSaying ws = WiseSaying.fromMap(map);
 
         return Optional.of(ws);
+
     }
 
     public void clear() {
         Util.file.delete(getDbPath());
     }
 
-    public String getDbPath() {
+    private String getDbPath() {
         return "db/wiseSaying";
+    }
+
+    public PageDto findAll(int page, int pageSize) {
+        List<WiseSaying> filteredContent = findAll().stream()
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
+        int totalCount = findAll().size();
+        return new PageDto(page, pageSize, totalCount, filteredContent);
     }
 
     public List<WiseSaying> findAll() {
@@ -73,41 +81,31 @@ public class WiseSayingFileRepository {
                 .toList();
     }
 
-    public PageDto findByContentContainingDesc(String kw, int pageSize, int pageNo) {
-        List<WiseSaying> filteredWiseSayings = findAll().stream()
-                .filter(wiseSaying -> wiseSaying.getSaying().contains(kw))
-                .sorted(Comparator.comparing(WiseSaying::getId).reversed())
+    public PageDto findByContentContainingDesc(String kw, int page, int pageSize) {
+        List<WiseSaying> filteredContent = findAll().reversed().stream()
+                .filter(w -> w.getSaying().contains(kw))
                 .toList();
 
-        return pageOf(filteredWiseSayings, pageNo, pageSize);
+        return pageOf(filteredContent, page, pageSize);
     }
 
-    private PageDto pageOf(List<WiseSaying> filteredContent, int pageNo, int pageSize) {
+    private PageDto pageOf(List<WiseSaying> filteredContent, int page, int pageSize) {
+        int totalCount = filteredContent.size();
 
-        List<WiseSaying> content = filteredContent.stream()
-                .skip((pageNo - 1) * pageSize)
+        List<WiseSaying> pagedFilteredContent = filteredContent
+                .stream()
+                .skip((page - 1) * pageSize)
                 .limit(pageSize)
                 .toList();
 
-        int totalItems = filteredContent.size();
-        return new PageDto(pageNo, pageSize, totalItems, content);
+        return new PageDto(page, pageSize, totalCount, pagedFilteredContent);
     }
 
-    public PageDto findByAuthorContainingDesc(String kw, int pageSize, int pageNo) {
-        List<WiseSaying> filteredWiseSayings = findAll().stream()
-                .filter(wiseSaying -> wiseSaying.getAuthor().contains(kw))
-                .sorted(Comparator.comparing(WiseSaying::getId).reversed())
+    public PageDto findByAuthorContainingDesc(String kw, int page, int pageSize) {
+        List<WiseSaying> filteredContent = findAll().reversed().stream()
+                .filter(w -> w.getAuthor().contains(kw))
                 .toList();
 
-        return pageOf(filteredWiseSayings, pageNo, pageSize);
-    }
-
-    public PageDto findByContentContainingOrAuthorContainingDesc(String kw, int pageSize, int pageNo) {
-        List<WiseSaying> filteredWiseSayings = findAll().stream()
-                .filter(wiseSaying -> wiseSaying.getAuthor().contains(kw) || wiseSaying.getSaying().contains(kw))
-                .sorted(Comparator.comparing(WiseSaying::getId).reversed())
-                .toList();
-
-        return pageOf(filteredWiseSayings, pageNo, pageSize);
+        return pageOf(filteredContent, page, pageSize);
     }
 }
