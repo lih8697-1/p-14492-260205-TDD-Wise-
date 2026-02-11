@@ -15,6 +15,6 @@ public class PageDto {
     private List<WiseSaying> content;
 
     public int getPageCount() {
-        return (int) Math.ceil((double) totalCount / pageSize);
+        return (int)Math.ceil((double)totalCount / pageSize);
     }
 }

@@ -15,7 +15,7 @@ public class App {
 
     public App() {
         this.sc = AppContext.sc;
-        wiseSayingController= AppContext.wiseSayingController;
+        wiseSayingController = AppContext.wiseSayingController;
         systemController = AppContext.systemController;
     }
 
@@ -24,7 +24,8 @@ public class App {
 
         System.out.println("== 명언 앱 ==");
 
-        while (true){
+        while (true) {
+
             System.out.println("명령) ");
             String cmd = sc.nextLine();
 

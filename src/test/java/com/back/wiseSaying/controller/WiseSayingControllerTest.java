@@ -154,6 +154,7 @@ public class WiseSayingControllerTest {
         assertThat(out)
                 .doesNotContain("1 / 작자미상 / 현재를 사랑하라.")
                 .contains("1 / 소크라테스 / 너 자신을 알라");
+
     }
 
     @Test
@@ -239,6 +240,8 @@ public class WiseSayingControllerTest {
                 .doesNotContain("3 / 작가 3 / 명언 3")
                 .doesNotContain("2 / 작가 2 / 명언 2")
                 .doesNotContain("1 / 작가 1 / 명언 1");
+
+
     }
 
     @Test
@@ -298,5 +301,7 @@ public class WiseSayingControllerTest {
                 .contains("2 / 작가 2 / 명언 2")
                 .contains("1 / 작가 1 / 명언 1")
                 .contains("페이지 : 1 / [2]");
+
+
     }
 }

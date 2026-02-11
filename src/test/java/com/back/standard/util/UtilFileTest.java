@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UtilFileTest {
+
     @BeforeAll
     static void beforeAll() {
         Util.file.mkdir("temp");
@@ -23,7 +24,7 @@ public class UtilFileTest {
     void t1() {
 
         // 무언가를 세팅하고
-        String filePath = "temp/test.txt";
+        String filePath = "test.txt";
 
         // 수행하면
         Util.file.touch(filePath);
@@ -41,7 +42,7 @@ public class UtilFileTest {
     void t2() {
 
         // given
-        String filePath = "temp/test.txt";
+        String filePath = "test.txt";
         Util.file.touch(filePath); // 파일 생성
 
         // when
@@ -50,6 +51,7 @@ public class UtilFileTest {
         // then
         boolean rst = Util.file.exists(filePath);
         assertThat(rst).isFalse();
+
     }
 
     @Test
@@ -57,7 +59,7 @@ public class UtilFileTest {
     void t3() {
 
         // given
-        String filePath = "temp/test.txt";
+        String filePath = "test.txt";
         Util.file.set(filePath, "hello world"); // 파일 쓰기
 
         // when
@@ -66,7 +68,6 @@ public class UtilFileTest {
         // then
         assertThat(content).isEqualTo("hello world");
 
-        Util.file.delete(filePath);
     }
 
     @Test
@@ -83,7 +84,6 @@ public class UtilFileTest {
         boolean rst = Util.file.exists(filePath);
         assertThat(rst).isTrue();
 
-        // 테스트가 끝나면 파일 삭제
         Util.file.delete(filePath);
     }
 }

@@ -23,7 +23,7 @@ public class Rq {
 
         String[] cmdBits = cmd.split("\\?");
 
-        if (cmdBits.length < 2) {
+        if(cmdBits.length < 2) {
             return defaultValue;
         }
 
@@ -46,14 +46,17 @@ public class Rq {
 
         String value = getParam(key, "");
 
-        if (value.isBlank()) {
+        if(value.isBlank()) {
             return defaultValue;
         }
 
         try {
+
             return Integer.parseInt(value);
+
         } catch (NumberFormatException e) {
             return defaultValue;
         }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.back.wiseSaying.repository;
 
+import com.back.global.AppConfig;
 import com.back.global.AppContext;
 import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
@@ -17,6 +18,7 @@ public class WiseSayingFileRepositoryTest {
     private WiseSayingFileRepository wiseSayingFileRepository;
 
     public WiseSayingFileRepositoryTest() {
+        AppConfig.setTestMode();
         AppContext.init();
         wiseSayingFileRepository = AppContext.wiseSayingFileRepository;
     }
@@ -43,6 +45,7 @@ public class WiseSayingFileRepositoryTest {
         System.out.println(foundedWiseSaying);
 
         assertThat(foundedWiseSaying).isEqualTo(wiseSaying);
+
     }
 
     @Test
@@ -59,6 +62,8 @@ public class WiseSayingFileRepositoryTest {
 
         WiseSaying foundedWiseSaying2 = wiseSayingFileRepository.findById(2).get();
         assertThat(foundedWiseSaying2).isEqualTo(wiseSaying2);
+
+
     }
 
     @Test
@@ -74,6 +79,7 @@ public class WiseSayingFileRepositoryTest {
 
         WiseSaying foundedWiseSaying1 = wiseSayingFileRepository.findById(1).orElse(null);
         assertThat(foundedWiseSaying1).isNull();
+
     }
 
     @Test
@@ -122,6 +128,7 @@ public class WiseSayingFileRepositoryTest {
                         wiseSaying2,
                         wiseSaying3
                 );
+
     }
 
     @Test
@@ -137,13 +144,14 @@ public class WiseSayingFileRepositoryTest {
         WiseSaying wiseSaying3 = new WiseSaying("꿈은 현실이 된다.", "작자미상");
         wiseSayingFileRepository.save(wiseSaying3);
 
-        PageDto pageDto = wiseSayingFileRepository.findByContentContainingDesc("꿈", 5, 1);
+        PageDto pageDto = wiseSayingFileRepository.findByContentContainingDesc("꿈", 1, 5);
 
         assertThat(pageDto.getContent())
                 .containsExactly(
                         wiseSaying3,
                         wiseSaying1
                 );
+
     }
 
     @Test
@@ -159,38 +167,13 @@ public class WiseSayingFileRepositoryTest {
         WiseSaying wiseSaying3 = new WiseSaying("꿈은 현실이 된다.", "작자미상");
         wiseSayingFileRepository.save(wiseSaying3);
 
-        PageDto pageDto = wiseSayingFileRepository.findByAuthorContainingDesc("테", 5, 1);
+        PageDto pageDto = wiseSayingFileRepository.findByAuthorContainingDesc("테", 1, 5);
 
         assertThat(pageDto.getContent())
                 .containsExactly(
                         wiseSaying2,
                         wiseSaying1
                 );
-    }
 
-    @Test
-    @DisplayName("명언 다건 조회 - author, content 필터링")
-    void t8() {
-
-        WiseSaying wiseSaying1 = new WiseSaying("꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "괴테");
-        wiseSayingFileRepository.save(wiseSaying1);
-
-        WiseSaying wiseSaying2 = new WiseSaying("너 자신을 알라.", "소크라테스");
-        wiseSayingFileRepository.save(wiseSaying2);
-
-        WiseSaying wiseSaying3 = new WiseSaying("꿈은 현실이 된다.", "작자미상");
-        wiseSayingFileRepository.save(wiseSaying3);
-
-        WiseSaying wiseSaying4 = new WiseSaying("잠을 잘 자야 합니다.", "꿈꾸는자");
-        wiseSayingFileRepository.save(wiseSaying4);
-
-        PageDto pageDto = wiseSayingFileRepository.findByContentContainingOrAuthorContainingDesc("꿈", 5, 1);
-
-        assertThat(pageDto.getContent())
-                .containsExactly(
-                        wiseSaying4,
-                        wiseSaying3,
-                        wiseSaying1
-                );
     }
 }

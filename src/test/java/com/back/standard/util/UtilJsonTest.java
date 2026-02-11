@@ -28,13 +28,15 @@ public class UtilJsonTest {
         // then
         assertThat(jsonStr).isEqualTo(
                 """
-                {
-                    "id": 1,
-                    "name": "홍길동",
-                    "age": 20
-                }"""
+                        {
+                            "id": 1,
+                            "name": "홍길동",
+                            "age": 20
+                        }"""
         );
+
     }
+
 
     @Test
     @DisplayName("Json을 map으로 바꿀 수 있다.")
@@ -49,8 +51,6 @@ public class UtilJsonTest {
 
         // when
         Map<String, Object> map = Util.json.toMap(jsonStr);
-
-        System.out.println(map);
 
         // then
         assertThat(map)

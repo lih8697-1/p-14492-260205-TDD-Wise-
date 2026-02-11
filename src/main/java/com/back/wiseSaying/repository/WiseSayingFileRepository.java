@@ -1,5 +1,6 @@
 package com.back.wiseSaying.repository;
 
+import com.back.global.AppConfig;
 import com.back.standard.util.Util;
 import com.back.wiseSaying.dto.PageDto;
 import com.back.wiseSaying.entity.WiseSaying;
@@ -61,7 +62,7 @@ public class WiseSayingFileRepository implements WiseSayingRepository{
     }
 
     private String getDbPath() {
-        return "db/wiseSaying";
+        return AppConfig.getMode() + "/db/wiseSaying";
     }
 
     public PageDto findAll(int page, int pageSize) {
